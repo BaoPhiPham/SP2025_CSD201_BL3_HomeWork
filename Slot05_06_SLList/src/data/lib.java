@@ -19,7 +19,7 @@ public class Lib {
      * @param fname the file name storing data
      * @throws Exception
      */
-    static void viewFile(String fname) throws Exception {
+    public static void viewFile(String fname) throws Exception {
         File g = new File(fname);
         if (!g.exists()) {//check whether or not the file fname exists
             System.out.println(" The file " + fname + " does not exist!");
