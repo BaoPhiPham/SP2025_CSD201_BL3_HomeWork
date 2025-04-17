@@ -162,38 +162,42 @@ public class MyList {
         ftraverse(f);
         //------------------------------------------------------------------------------------
         //------ Start your code here---------------------------------------------------------
-        if (!isEmpty()) {
-            if (size == 1) {
-                this.head = this.tail = null;
-                size = 0;
+        if (isEmpty()) {
+            f.writeBytes("The list is empty\r\n");
+        } else {
+            // Find the maximum price
+            Node current = head;
+            int maxPrice = current.info.price;
+
+            while (current != null) {
+                if (current.info.price > maxPrice) {
+                    maxPrice = current.info.price;
+                }
+                current = current.next;
+            }
+
+            // Remove
+            if (head.info.price == maxPrice) {
+                head = head.next;
+                if (head == null) {
+                    tail = null;
+                }
             } else {
-                Node maxNode = head;
-                Node p = head;
-                // Tìm node có giá cao nhất
-                while (p != null) {
-                    if (p.info.price > maxNode.info.price) {
-                        maxNode = p;
-                    }
+                Node prevP = head;
+                Node p = head.next;
+                while (p != null && p.info.price != maxPrice) {
+                    prevP = p;
                     p = p.next;
                 }
-                // Xóa node maxNode
-                if (maxNode == head) {
-                    head = head.next;
-                    if (head == null) {
-                        tail = head;
-                    }
-                } else {
-                    Node prev = head;
-                    while (prev.next != maxNode) {
-                        prev = prev.next;
-                    }
-                    prev.next = maxNode.next;
-                    if (maxNode == tail) {
-                        tail = prev;
+
+                if (p != null) {
+                    prevP.next = p.next; // Remove P
+                    if (p == tail) {
+                        tail = prevP;   // Chuyen tail thanh prev
                     }
                 }
-                size--;
             }
+            size--;
         }
         //------ End your code here-----------------------------------------------------------
         //------------------------------------------------------------------------------------

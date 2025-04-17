@@ -158,7 +158,7 @@ public class MySLList {
             return;
         }else if(this.head != null){
             //if there is only element:
-            if(this.head == null){
+            if(this.head.next == null){
                 System.out.println("The last node have been removed: " + this.head.infor);
                 this.head = null;
             }else{
