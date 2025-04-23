@@ -87,13 +87,13 @@ public class MyQueue {
         if (!isEmpty()) {
             Phone value = this.head.info;
             this.head = this.head.next;
-            f.writeBytes(value + "\n");
+            f.writeBytes(value + "\r\n");
             size--;
             if(this.head == null){
                 this.tail = null;
             }
         } else {
-            f.writeBytes(null + "\n");
+            f.writeBytes(null + "\r\n");
         }
         //------ End your code here-----------------------------------------------------------
         //------------------------------------------------------------------------------------
@@ -115,9 +115,9 @@ public class MyQueue {
         //------ Start your code here---------------------------------------------------------
         if (!isEmpty()) {
             Phone value = this.head.info;
-            f.writeBytes(value + "\n");
+            f.writeBytes(value + "\r\n");
         } else {
-            f.writeBytes(null + "\n");
+            f.writeBytes(null + "\r\n");
         }
         //------ End your code here-----------------------------------------------------------
         //------------------------------------------------------------------------------------

@@ -81,11 +81,11 @@ public class MyStack {
         //------ Start your code here---------------------------------------------------------
         if (!isEmpty()) {
             Phone value = this.head.info;
-            f.writeBytes(value.toString() + "\n");
+            f.writeBytes(value.toString() + "\r\n");
             this.head = this.head.next;
             size--;
         } else {
-            f.writeBytes(null + "\n");
+            f.writeBytes(null + "\r\n");
         }
 
         //------ End your code here-----------------------------------------------------------
@@ -108,9 +108,9 @@ public class MyStack {
         //------ Start your code here---------------------------------------------------------
         if (!isEmpty()) {
             Phone value = this.head.info;
-            f.writeBytes(value.toString() + "\n");
+            f.writeBytes(value.toString() + "\r\n");
         } else {
-            f.writeBytes(null + "\n");
+            f.writeBytes(null + "\r\n");
         }
         //------ End your code here-----------------------------------------------------------
         //------------------------------------------------------------------------------------

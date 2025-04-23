@@ -30,3 +30,34 @@
 /Assignment02/New folder/Q2/nbproject/private/
 /Assignment02/Q1/dist/
 /Assignment02/Q2/dist/
+
+# 1. Ignore NetBeans-specific folders
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# 2. Ignore compiled Java classes
+*.class
+
+# 3. Ignore logs, temporary files
+*.log
+*.tmp
+
+# 4. VS Code folder
+.vscode/
+
+# 5. OS-generated files
+.DS_Store
+Thumbs.db
+
+# 6. Maven/Gradle cache (nếu có dùng)
+target/
+out/
+*.iml
+.idea/
+.gradle/
+/Slot15_16_Tree_BST/nbproject/private/
+/Slot17_18_BST/nbproject/private/
