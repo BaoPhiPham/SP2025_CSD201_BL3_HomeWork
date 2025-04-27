@@ -103,34 +103,31 @@ class RequestQueue {
     }
 
     void deleteNode(Node p) {
-        if (!isEmpty()) {
-            Node q = this.front;
-            Node prev = this.front;
-            while (q != null) {
-                if (p == q) {
-                    if (this.front == q) {
-                        this.front = q.next;
-                        if (this.front == null) {
-                            this.rear = null;
-                        }
+        if (isEmpty()) {
+            return;
+        }
+        Node q = this.front;
+        Node prev = null;
 
-                    } else if (this.rear == q) {
-                        this.rear = prev;
-                        this.rear.next = null;
-                    } else {
-                        prev = q.next;
-                        q = prev.next;
+        while (q != null) {
+            if (q == p) {
+                if (q == front) {
+                    front = front.next;
+                    if (front == null) {
+                        rear = null;
                     }
-
                 } else {
-                    prev = q;
-                    q = q.next;
+                    prev.next = q.next;
+                    if (q == rear) {
+                        rear = prev;
+                    }
                 }
-
+                return; // sau khi xóa xong thì thoát
             }
+            prev = q;
+            q = q.next;
         }
     }
-
 }
 
 class MyStore {
