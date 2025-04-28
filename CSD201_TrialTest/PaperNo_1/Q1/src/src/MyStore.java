@@ -31,6 +31,17 @@ class FruitList {
         }
     }
 
+    Node searchNode(Fruit p) {
+        Node q = this.head;
+        while (q != null) {
+            if (q.info.getType().equalsIgnoreCase(p.getType())) {
+                return q;
+            }
+            q = q.next;
+        }
+        return null;
+    }
+
     void addLast(String type, int amount, int price) {
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
@@ -97,36 +108,37 @@ class RequestQueue {
             if (this.front == null) {
                 this.rear = null;
             }
+        } else {
+            tmp = null;
         }
         //---------------------------------------------------------
         return tmp;
     }
 
     void deleteNode(Node p) {
-        if (isEmpty()) {
+        if (p == null || isEmpty()) {
             return;
         }
-        Node q = this.front;
-        Node prev = null;
-
-        while (q != null) {
-            if (q == p) {
-                if (q == front) {
-                    front = front.next;
-                    if (front == null) {
-                        rear = null;
-                    }
-                } else {
-                    prev.next = q.next;
-                    if (q == rear) {
-                        rear = prev;
-                    }
-                }
-                return; // sau khi xóa xong thì thoát
+        if (this.front.info.getType().equalsIgnoreCase(p.info.getType())) {
+            this.front = this.front.next;
+            if (this.front == null) {
+                this.rear = null;
             }
-            prev = q;
-            q = q.next;
+        } else {
+            Node prevq = this.front;
+            Node q = this.front.next;
+            while (q != null && !(q.info.getType().equalsIgnoreCase(p.info.getType()))) {
+                prevq = q;
+                q = q.next;
+            }
+            if (q != null) {
+                prevq.next = q.next;
+                if (this.rear == q) {
+                    this.rear = prevq;
+                }
+            }
         }
+
     }
 }
 
@@ -185,6 +197,15 @@ class MyStore {
         f.close();
     }
 
+    private boolean updateFList(Fruit p) {
+        Node q = FList.searchNode(p);
+        if (q != null && q.info.getAmount() >= p.getAmount()) {
+            q.info.setAmount(q.info.getAmount() - p.getAmount());
+            return true;
+        }
+        return false;
+    }
+
     void f2() throws Exception {
         load(1);
         String fname = "f2.txt";
@@ -196,23 +217,9 @@ class MyStore {
         ftraverse(f);
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
-        Node p = RQueue.front;
-        boolean check1 = true;
-        while (p != null) {
-            if (check1) {
-                Node q = FList.head;
-                while (q != null) {
-                    if (q.info.getType().equals(p.info.getType())
-                            && q.info.getAmount() >= p.info.getAmount()) {
-                        q.info.setAmount(q.info.getAmount() - p.info.getAmount());
-                        check1 = false;
-                        RQueue.deleteNode(p);
-                        break;
-                    }
-                    q = q.next;
-                }
-            }
-            p = p.next;
+        Fruit request = RQueue.deQueue();
+        if (request != null) {
+            updateFList(request);
         }
         //---------------------------------------------------------
         ftraverse(f);
@@ -230,19 +237,11 @@ class MyStore {
         ftraverse(f);
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
-        Node p = RQueue.front;
-        while (p != null) {
-            Node q = FList.head;
-            while (q != null) {
-                if (q.info.getType().equalsIgnoreCase(p.info.getType())
-                        && q.info.getAmount() >= p.info.getAmount()) {
-                    q.info.setAmount(q.info.getAmount() - p.info.getAmount());
-                    break;
-                }
-                q = q.next;
+        while (!(RQueue.isEmpty())) {
+            Fruit request = RQueue.deQueue();
+            if (request != null) {
+                updateFList(request);
             }
-            p = p.next;
-            RQueue.deQueue();
         }
         //---------------------------------------------------------
         ftraverse(f);
@@ -261,20 +260,15 @@ class MyStore {
         int S = 0;
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
-        Node p = RQueue.front;
-        while (p != null) {
-            Node q = FList.head;
-            while (q != null) {
-                if (q.info.getType().equalsIgnoreCase(p.info.getType())
-                        && q.info.getAmount() >= p.info.getAmount()) {
-                    S += (p.info.getAmount() * q.info.getPrice());
-                    q.info.setAmount(q.info.getAmount() - p.info.getAmount());
-                    break;
+        while (!(RQueue.isEmpty())) {
+            Fruit request = RQueue.deQueue();
+            if (request != null) {
+                Node p = FList.searchNode(request);
+                boolean check = updateFList(request);
+                if (p != null && check) {
+                    S += (request.getAmount() * p.info.getPrice());
                 }
-                q = q.next;
             }
-            p = p.next;
-            RQueue.deQueue();
         }
         //---------------------------------------------------------
         f.writeBytes("Money     : " + S + " ");
