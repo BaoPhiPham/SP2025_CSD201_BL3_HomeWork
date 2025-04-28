@@ -54,9 +54,6 @@ class BookBST {
             p.left = insertRec(p.left, book);
         } else if (book.getTitle().compareTo(p.info.getTitle()) > 0) {
             p.right = insertRec(p.right, book);
-        } else {
-
-            p.info.setCopies(p.info.getCopies() + book.getCopies());
         }
         return p;
     }
